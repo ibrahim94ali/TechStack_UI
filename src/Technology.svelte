@@ -10,13 +10,17 @@
 
     function onKeyDown(ev) {
         if(ev.keyCode === 27) {
-            isEditing = false;
-            newName = name;
+            onCancelEditing();
         }
 
-        if(ev.keyCode === 13 && !document.getElementById('btn-edit-save').disabled) {
+        if(ev.keyCode === 13 && !document.getElementById('btn-save').disabled) {
             onSaveEditing();
         }
+    }
+
+    function onCancelEditing() {
+        isEditing = false;
+        newName = name;
     }
 
     function onTechClick() {
@@ -73,7 +77,13 @@
         color: #E6E8E6;
         width: 60px;
     }
-    #btn-edit-save {
+    #btn-save {
+        margin-right: 10px;
+        background-color: #ec4c4c;
+        color: #E6E8E6;
+        width: 60px;
+    }
+    #btn-edit-cancel {
         background-color: #E6E8E6;
         color: #3F403F;
         width: 60px;
@@ -94,11 +104,12 @@
     <span class="posts"> #{nOfPosts} Posts</span>
     <div class="btns">
         {#if !isEditing}
-        <button id="btn-edit-save" on:click={onTechEdit}>Edit</button>
-        {:else}
-        <button id="btn-edit-save" on:click={onSaveEditing} disabled={!newName || newName === name}>Save</button>
-        {/if}
+        <button id="btn-edit-cancel" on:click={onTechEdit}>Edit</button>
         <button id="btn-del" on:click={onTechDelete}>Delete</button>
+        {:else}
+        <button id="btn-save" on:click={onSaveEditing} disabled={!newName || newName === name}>Save</button>
+        <button id="btn-edit-cancel" on:click={onCancelEditing}>Cancel</button>
+        {/if}
     </div>
 
 </div>

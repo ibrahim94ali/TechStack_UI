@@ -1,4 +1,4 @@
-import { GET_TECHS, EDIT_TECH, DELETE_TECH, ADD_TECH, ADD_POST } from "./queries";
+import { GET_TECHS, EDIT_TECH, DELETE_TECH, ADD_TECH, ADD_POST, EDIT_POST, DELETE_POST } from "./queries";
 import { technologies } from "./stores";
 
 const graphql  = async (query) => {
@@ -86,6 +86,43 @@ export const addPost = async (title, owner, link, techId, date) => {
             }, ...techs[index].posts, ]
               return techs;
           })
+      }
+    }
+}
+
+export const editPost = async (title, owner, link, date, id) => {
+  const response = await graphql(EDIT_POST(title, owner, link, date, id))    
+    if (response.ok) {
+        let {data} = await response.json();
+      if (data.updatePost.id == id) {
+          technologies.update(techs => {
+              const techIndex = techs.findIndex(tech => tech.id === data.updatePost.techId);
+              const postIndex = techs[techIndex].posts.findIndex(post => post.id === id);
+              techs[techIndex].posts[postIndex] = {
+                  id,
+                  title,
+                  owner,
+                  link,
+                  date,
+                  techId: data.updatePost.techId
+              }
+              return techs;
+          })
+      }
+    }
+}
+
+export const deletePost = async (id) => {
+  const response = await graphql(DELETE_POST(id))    
+    if (response.ok) {
+        let {data} = await response.json();
+      if (data.deletePost.id == id) {
+        technologies.update(techs => {
+          const techIndex = techs.findIndex(tech => tech.id === data.deletePost.techId);
+          const postIndex = techs[techIndex].posts.findIndex(post => post.id === id);
+          techs[techIndex].posts.splice(postIndex, 1);
+          return [...techs];
+      })
       }
     }
 }

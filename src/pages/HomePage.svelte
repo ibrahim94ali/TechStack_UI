@@ -54,7 +54,7 @@ function onaddTech() {
 
 	h2 {
 		text-align: center;
-		font-size: 30px;
+		font-size: 35px;
 	}
 
 	.header {
