@@ -1,4 +1,5 @@
 <script>
+import { url } from "@sveltech/routify";
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
     export let name;
@@ -23,9 +24,6 @@
         newName = name;
     }
 
-    function onTechClick() {
-        dispatch('tech');
-    }
     function onTechEdit() {
         isEditing = true;
     }
@@ -97,7 +95,9 @@
 
 <div class="container" on:keydown="{onKeyDown}">
     {#if !isEditing}
-        <span on:click="{onTechClick}" class="title">{name}</span>
+        <a href="{$url(`techPage/${id}`)}">
+            <span class="title">{name}</span>
+        </a>
         {:else}
         <input id="new-name" bind:value="{newName}" autofocus>
         {/if}

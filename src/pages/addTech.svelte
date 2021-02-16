@@ -1,5 +1,4 @@
 <script>
-import router from "page";
 import { addTech } from "../data-service";
 import { technologies } from '../stores';
 let name;
@@ -17,10 +16,10 @@ function onKeyDown(ev) {
     }
 
 function onCancel() {
-    router('/');
+    // router('/');
 }
 async function onSave() {
-    await addTech(name).then(router('/'));
+    // await addTech(name).then(router('/'));
 }
 </script>
 

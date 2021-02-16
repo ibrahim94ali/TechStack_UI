@@ -1,5 +1,11 @@
+<script>
+    import { url } from "@sveltech/routify";
+</script>
 <div class="toolbar-container">
-    <img src="logo.png" alt="Logo" on:click>
+    <a href="{$url('/')}">
+        <img src="{$url('logo.png')}" alt="Logo">
+    </a>
+
     <h1>
         Welcome to Tech Stack
     </h1>
