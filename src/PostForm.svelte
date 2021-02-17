@@ -1,6 +1,8 @@
 <script>
     import { addPost, editPost } from "./data-service";
     import { createEventDispatcher } from 'svelte';
+    import { fade } from 'svelte/transition';
+
     const dispatch = createEventDispatcher();
     export let title = '', link = '', owner = '', techId;
 
@@ -22,7 +24,9 @@
 
     async function onEditPost() {
         const date = +(new Date);
-        await editPost(title, owner, link, date, techId);
+        await editPost(title, owner, link, date, techId).then(() => {
+            dispatch('cancel');
+        });
     }
 
     function validator() {
@@ -35,8 +39,8 @@
 
     function onCancelEditing() {
         dispatch('cancel');
-
     }
+
     </script>
     
     <style>
@@ -51,6 +55,7 @@
             height: 7rem;
             margin: 2rem auto;
             border-radius: 2rem;
+            transition: opacity 0.4s;
         }
     
         input {
@@ -71,6 +76,10 @@
         .input-group {
             display: flex;
             align-items: center;
+        }
+
+        .title-container {
+            max-width: 50rem;
         }
 
         .title {
@@ -94,10 +103,10 @@
     
     </style>
     
-    <form class="container"  on:submit|preventDefault="{isEditing ? onSavePost : onEditPost}" on:input="{validator}" class:empty-post={!isEditing && !title && !owner && !link}>
-            <div class="input-group" class:title={isEditing}>
+    <form class="container"  on:submit|preventDefault={isEditing ? onEditPost : onSavePost} on:input="{validator}" class:empty-post={!isEditing && !title && !owner && !link} in:fade>
+            <div class="input-group title-container" class:title={isEditing}>
                 <label for="title">Title:</label>
-                <input placeholder="{isEditing ? "Post title" : "New Post Title"}" id="title" bind:value="{title}" autocomplete="off">
+                <input placeholder="{isEditing ? "Post title" : "New Post Title"}" id="title" bind:value="{title}" autocomplete="off" autofocus="{isEditing}">
             </div>
             <div class="meta-container">
                 <div class="input-group">
@@ -112,11 +121,11 @@
 
             {#if !isEditing}
         
-            <button id="save-btn" type="submit" on:click="{onSavePost}" disabled="{!title || !link || !owner}">Save Post</button>
+            <button id="save-btn" type="submit" disabled="{!title || !link || !owner}">Save Post</button>
             {:else }
             <div class="btn-container">
-                <button id="save-btn" type="submit" on:click="{onSavePost}" disabled="{!isValidForm}">Update</button>
-                <button id="cancel-btn" type="reset" on:click="{onCancelEditing}" >Cancel</button>
+                <button id="save-btn" type="submit" disabled="{!isValidForm}">Update</button>
+                <button id="cancel-btn" type="button" on:click="{onCancelEditing}" >Cancel</button>
             </div>
             {/if}
         </form>

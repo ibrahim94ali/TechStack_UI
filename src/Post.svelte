@@ -1,12 +1,13 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import PostForm from './PostForm.svelte';
-    const dispatch = createEventDispatcher();
     export let title;
     export let owner;
     export let link;
     export let date;
     export let id;
+
+    const dispatch = createEventDispatcher();
 
     let isEditing = false;
 

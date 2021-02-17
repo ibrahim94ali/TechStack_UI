@@ -1,40 +1,31 @@
 <script>
 import { url } from "@sveltech/routify";
-    import { createEventDispatcher } from 'svelte';
-    const dispatch = createEventDispatcher();
-    export let name;
-    export let id;
-    export let nOfPosts;
+import { createEventDispatcher } from 'svelte';
+import { fly } from 'svelte/transition';
+const dispatch = createEventDispatcher();
+export let name;
+export let id;
+export let nOfPosts;
 
-    let isEditing = false;
-    let newName = name;
+let isEditing = false;
+let newName = name;
 
-    function onKeyDown(ev) {
-        if(ev.keyCode === 27) {
-            onCancelEditing();
-        }
+function onCancelEditing() {
+    isEditing = false;
+    newName = name;
+}
 
-        if(ev.keyCode === 13 && !document.getElementById('btn-save').disabled) {
-            onSaveEditing();
-        }
-    }
+function onTechEdit() {
+    isEditing = true;
+}
 
-    function onCancelEditing() {
-        isEditing = false;
-        newName = name;
-    }
-
-    function onTechEdit() {
-        isEditing = true;
-    }
-
-    function onSaveEditing() {
-        isEditing = false;
-        dispatch('edit', {name: newName, id: id});
-    }
-    function onTechDelete() {
-        dispatch('delete');
-    }
+function onSaveEditing() {
+    isEditing = false;
+    dispatch('edit', {name: newName, id: id});
+}
+function onTechDelete() {
+    dispatch('delete');
+}
 </script>
 
 <style>
@@ -88,20 +79,22 @@ import { url } from "@sveltech/routify";
         background-color: #58355E;
         color: #E6E8E6;
     }
-    #btn-edit-cancel {
+    #btn-cancel {
         background-color: #E6E8E6;
         color: #58355E;
     }
 </style>
 
-<div class="container" on:keydown="{onKeyDown}">
+<div class="container" transition:fly|local="{{y: 100, duration: 500}}">
     <div class="post-header">
         {#if !isEditing}
             <a href="{$url(`techPage/${id}`)}">
                 <h2 class="title">{name}</h2>
             </a>
             {:else}
-            <input id="new-name" bind:value="{newName}" autofocus autocomplete="off">
+            <form on:submit|preventDefault="{onSaveEditing}">
+                <input id="new-name" bind:value="{newName}" autofocus autocomplete="off">
+            </form>
             {/if}
         <span class="posts"> #{nOfPosts} Posts</span>
     </div>
@@ -110,8 +103,8 @@ import { url } from "@sveltech/routify";
         <button id="btn-edit-cancel" on:click={onTechEdit}>Edit</button>
         <button id="btn-del" on:click={onTechDelete}>Delete</button>
         {:else}
-        <button id="btn-save" on:click={onSaveEditing} disabled={!newName || newName === name}>Save</button>
-        <button id="btn-edit-cancel" on:click={onCancelEditing}>Cancel</button>
+        <button id="btn-save" type="submit" disabled={!newName || newName === name}>Save</button>
+        <button id="btn-cancel" type="button" on:click={onCancelEditing}>Cancel</button>
         {/if}
     </div>
 

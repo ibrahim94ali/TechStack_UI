@@ -7,16 +7,6 @@ let name;
 let techNames = [];
 const unsub = technologies.subscribe(data => techNames = data.map(tech => tech.name))
 
-function onKeyDown(ev) {
-        if(ev.keyCode === 27) {
-            onCancel();
-        }
-
-        if(ev.keyCode === 13 && !document.getElementById('save-btn').disabled) {
-            onSave();
-        }
-    }
-
 function onCancel() {
     $goto('/');
 }
@@ -50,10 +40,10 @@ async function onSave() {
 
 <Header title="Add New Technology" />
 
-<div class="container"  on:keydown="{onKeyDown}">
+<form class="container" on:submit|preventDefault="{onSave}">
     <input bind:value="{name}" placeholder="Name" autofocus>
     <div class="btns">
-        <button on:click="{onSave}" id="save-btn" disabled="{!name || techNames.includes(name)}">Save</button>
-        <button on:click="{onCancel}" id="cancel-btn">Cancel</button>
+        <button type="submit" id="save-btn" disabled="{!name || techNames.includes(name)}">Save</button>
+        <button type="button" on:click="{onCancel}" id="cancel-btn">Cancel</button>
     </div>
-</div>
+</form>

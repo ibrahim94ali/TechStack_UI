@@ -21,7 +21,6 @@ export const getTechs = async () => {
       if (response.ok) {
           let {data} = await response.json();
           technologies.set(data.technologies);
-        console.log(data.technologies)
       }
 };
 
@@ -31,7 +30,7 @@ export const addTech = async (name) => {
         let {data} = await response.json();
       if (data.addTechnology.name == name) {
           technologies.update(techs => {
-            techs = techs.concat({id: data.addTechnology.id, name, posts: []})
+            techs = techs.concat({id: data.addTechnology.id, name, posts: []}).sort((a, b) => a.name > b.name ? 1 : -1);
               return techs;
           })
       }

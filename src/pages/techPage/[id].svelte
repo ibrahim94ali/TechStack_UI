@@ -4,6 +4,7 @@ import { technologies } from "../../stores";
 import { editPost, deletePost } from '../../data-service';
 import Header from "../../Header.svelte";
 import PostForm from "../../PostForm.svelte";
+import { fade } from 'svelte/transition';
 
 export let id;
 
@@ -61,8 +62,8 @@ async function onPostDelete(id) {
         <p class="no-posts"> No posts yet... </p>
         {:else}
             <ul>
-                {#each posts as post}
-                <li>
+                {#each posts as post, i}
+                <li in:fade={{duration: 500, delay: i * 50 }}>
                     <Post {...post} on:edit={onPostEdit} on:delete={onPostDelete(post.id)}/>
                 </li>
                 {/each}
