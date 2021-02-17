@@ -39,69 +39,72 @@ import { url } from "@sveltech/routify";
 
 <style>
     .container {
-        width: 70%;
-        margin: 0 auto;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        padding: 20px 30px;
-        margin-top: 20px;
-        background-color: #3F403F;
-        color: #E6E8E6;
+        justify-content: space-evenly;
+        height: 15rem;
+        padding: 2rem 3rem;
+        background-color: #E6E8E6;
+        color: #58355E;
+        border-radius: 2rem;
+        box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.3);
     }
     .title {
-        font-size: 25px;
+        font-size: 3rem;
         font-weight: bold;
         cursor: pointer;
     }
     .posts {
-        font-size: 20px;
-        margin-left: 20px;
+        font-size: 1.6rem;
+        margin-left: 2rem;
     }
     .btns {
-        margin-left: auto;
         display: flex;
+        margin-top: 1rem;
     }
-    :global(button) {
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        background-color: #E6E8E6;
-        color: #3F403F;
+
+    button {
+        width: 8rem;
+        font-size: 1.4rem;
+    }
+
+    .post-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #58355E;
+        width: 100%;
     }
 
     #btn-del {
         margin-left: 10px;
-        background-color: #ec4c4c;
+        background-color: #B43333;
         color: #E6E8E6;
-        width: 60px;
     }
     #btn-save {
-        margin-right: 10px;
-        background-color: #ec4c4c;
+        margin-right: 1rem;
+        background-color: #58355E;
         color: #E6E8E6;
-        width: 60px;
     }
     #btn-edit-cancel {
         background-color: #E6E8E6;
-        color: #3F403F;
-        width: 60px;
-    }
-    
-    :global(button:disabled) {
-        background-color: gray !important;
-        cursor:default !important;
+        color: #58355E;
     }
 </style>
 
 <div class="container" on:keydown="{onKeyDown}">
-    {#if !isEditing}
-        <a href="{$url(`techPage/${id}`)}">
-            <span class="title">{name}</span>
-        </a>
-        {:else}
-        <input id="new-name" bind:value="{newName}" autofocus>
-        {/if}
-    <span class="posts"> #{nOfPosts} Posts</span>
+    <div class="post-header">
+        {#if !isEditing}
+            <a href="{$url(`techPage/${id}`)}">
+                <h2 class="title">{name}</h2>
+            </a>
+            {:else}
+            <input id="new-name" bind:value="{newName}" autofocus autocomplete="off">
+            {/if}
+        <span class="posts"> #{nOfPosts} Posts</span>
+    </div>
     <div class="btns">
         {#if !isEditing}
         <button id="btn-edit-cancel" on:click={onTechEdit}>Edit</button>

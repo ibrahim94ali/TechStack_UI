@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
+    import PostForm from './PostForm.svelte';
     const dispatch = createEventDispatcher();
     export let title;
     export let owner;
@@ -8,140 +9,83 @@
     export let id;
 
     let isEditing = false;
-    let newTitle = title;
-    let newOwner = owner;
-    let newLink = link;
-    let isValidForm = false;
 
-    function onKeyDown(ev) {
-        if(ev.keyCode === 27) {
-            onCancelEditing();         
-        }
-
-        if(ev.keyCode === 13 && !document.getElementById('btn-save').disabled) {
-            onSaveEditing();
-        }
-    }
-
-    function onCancelEditing() {
-        isEditing = false;
-        newTitle = title;
-        newOwner = owner;
-        newLink = link;
-    }
-
-    function onPostEdit() {
-        isEditing = true;
-    }
-
-    function onSaveEditing() {
-        isEditing = false;
-        dispatch('edit', {title: newTitle, owner: newOwner, link: newLink, id: id});
-    }
     function onPostDelete() {
         dispatch('delete');
-    }
-
-    function validator() {
-        if (!newTitle || !newOwner || !newLink || (title === newTitle && owner === newOwner && link === newLink)) {
-            isValidForm = false;
-        } else {
-            isValidForm = true;
-        }
     }
 </script>
 
 <style>
-
     .post-container {
-        background-color: #58355E;
-        padding: 20px;
-        color: #E6E8E6;
+        background-color: #E6E8E6;
+        padding: 2rem;
+        color: #58355E;
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 70%;
-        margin: 0 auto;
-        margin-top: 20px;
-
+        height: 7rem;
+        margin: 2rem auto;
+        border-radius: 2rem;
+        box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.3);
     }
+
     .meta-container {
         display: flex;
         flex-direction: column;
+        font-size: 1.6rem;
     }
-    h5 {
-        font-size: 22px;
+    h2 {
+        font-size: 1.8rem;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 600;
+        font-style: italic;
+        max-width: 50rem;
+        flex: 2;
     }
-    a {
-        color: #E6E8E6;
+
+    p {
+        font-weight: 300;
+        margin: 0;
     }
+
     span {
-        font-weight: 700;
+        font-weight: 400;
         margin-left: 10px;
     }
 
-    input {
-        width: 300px;
-    }
-
-    label {
-        margin: 0 10px;
-    }
-
-    form {
-        display: flex;
-        flex: 2;
-        justify-content: center;
-        align-items: center;
+    button {
+        width: 8rem;
+        font-size: 1.4rem;
     }
 
     #btn-del {
         margin-left: 10px;
-        background-color: #ec4c4c;
+        background-color: #B43333;
         color: #E6E8E6;
-        width: 60px;
     }
-    #btn-save {
-        margin-right: 10px;
-        background-color: #ec4c4c;
-        color: #E6E8E6;
-        width: 60px;
-    }
-    #btn-edit-cancel {
+    #btn-edit {
         background-color: #E6E8E6;
-        color: #3F403F;
-        width: 60px;
+        color: #58355E;
     }
-
 </style>
 
-<div class="post-container" on:keydown="{onKeyDown}">
     {#if !isEditing}
+    <div class="post-container">
+    <h2>
+        <a href={link} target="_blank">{title}</a>
+    </h2> 
     <div class="meta-container">
         <p>By: <span>{owner}</span> </p>
-        <p>Date: <span>{new Date(+date).toLocaleDateString()}</span></p>
-    </div>
-        <h5>
-        <a href={link} target="_blank">{title}</a>
-        </h5>  
-        {:else}
-        <form on:submit|preventDefault="{onSaveEditing}" on:input="{validator}">
-            <label for="owner">By:</label>
-            <input id="owner" bind:value="{newOwner}">
-            <label for="title">Title:</label>
-            <input id="title" bind:value="{newTitle}">
-            <label for="link">Link:</label>
-            <input id="link" bind:value="{newLink}">
-        </form>
-        {/if}
+        <p>Date: <span>{new Date(+date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit'})}</span></p>
+    </div> 
     <div class="btns-container">
-        {#if !isEditing}
-        <button  id="btn-edit-cancel" on:click={onPostEdit}> Edit </button>
+        <button  id="btn-edit" on:click={() => isEditing = true}> Edit </button>
         <button id="btn-del"  on:click={onPostDelete}> Delete </button>
-        {:else}
-        <button id="btn-save" on:click={onSaveEditing} disabled="{!isValidForm}"> Save </button>
-        <button id="btn-edit-cancel" on:click={onCancelEditing}> Cancel </button>
-        {/if}
-
     </div>
 </div>
+
+    {:else}
+        <PostForm techId={id} isEditing {title} {owner} {link} on:cancel={() => isEditing = false}/>
+    {/if}
+

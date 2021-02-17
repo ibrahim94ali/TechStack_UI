@@ -1,67 +1,74 @@
 <script>
-    import NewPost from "../../NewPost.svelte";
-    import Post from "../../Post.svelte";
-    import { technologies } from "../../stores";
-    import { editPost, deletePost } from '../../data-service';
+import Post from "../../Post.svelte";
+import { technologies } from "../../stores";
+import { editPost, deletePost } from '../../data-service';
+import Header from "../../Header.svelte";
+import PostForm from "../../PostForm.svelte";
 
-    export let id;
+export let id;
+
+let title;
+let posts = [];
+let index;
+
+const unsbubTechs = technologies.subscribe(techs => {
+    if(techs.length) {
+        index = techs.findIndex(tech => tech.id === id);
+        title = techs[index].name;
+        posts = techs[index].posts
+    };
+})
+
+async function onPostEdit({detail}) {
+    const { title, owner, link, id} = detail;
+    const now = new Date().getTime();
+    await editPost(title, owner, link, now, id);
+}
+
+async function onPostDelete(id) {
+    await deletePost(id);
+}
+
+</script>
     
-        let title;
-        let posts = [];
-        let index;
-    
-        const unsbubTechs = technologies.subscribe(techs => {
-            if(techs.length) {
-                index = techs.findIndex(tech => tech.id === id);
-                title = techs[index].name;
-                posts = techs[index].posts
-            };
-        })
-    
-        async function onPostEdit({detail}) {
-        const { title, owner, link, id} = detail;
-        const now = new Date().getTime();
-        await editPost(title, owner, link, now, id);
+<style>
+    ul {
+        list-style: none;
+        padding: 0;
     }
-    async function onPostDelete(id) {
-        await deletePost(id);
+    .no-posts {
+        text-align: center;
+        font-size: 1.6rem;
+        color: #e6e8e6;
+        margin-top: 2rem;
     }
-    
-    </script>
-    
-    <style>
-        h2 {
-            text-align: center;
-            font-size: 35px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            color: #58355E;
-        }
-        ul {
-            list-style: none;
-        }
-        .no-posts {
-            text-align: center;
-            font-size: 20px;
-        }
-    </style>
+    .posts-container {
+        padding: 2rem;
+    }
+    #new-post {
+        margin-bottom: 5rem;
+        box-shadow: none;
+    }
+</style>
     
     
-    <h2>{title}</h2>
-    <NewPost techId={id}/>
+  <Header {title} posts={posts.length}/>
+  <div class="posts-container">
+      <div id="new-post">
+        <PostForm techId={id} />
+    </div>
     {#if posts.length == 0}
         <p class="no-posts"> No posts yet... </p>
         {:else}
-        <div class="posts-container">
             <ul>
                 {#each posts as post}
                 <li>
                     <Post {...post} on:edit={onPostEdit} on:delete={onPostDelete(post.id)}/>
                 </li>
                 {/each}
-            </ul>
-        </div>    
+            </ul> 
     {/if}
+</div>   
     
     
     

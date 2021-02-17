@@ -1,6 +1,8 @@
 <script>
 import { addTech } from "../data-service";
+import Header from "../Header.svelte";
 import { technologies } from '../stores';
+import { goto } from "@sveltech/routify";
 let name;
 let techNames = [];
 const unsub = technologies.subscribe(data => techNames = data.map(tech => tech.name))
@@ -16,38 +18,42 @@ function onKeyDown(ev) {
     }
 
 function onCancel() {
-    // router('/');
+    $goto('/');
 }
 async function onSave() {
-    // await addTech(name).then(router('/'));
+    await addTech(name).then($goto('/'));
 }
 </script>
 
 <style>
     .container {
         text-align: center;
+        margin-top: 3rem;
     }
-    h2 {
-        font-size: 30px;
+
+    button {
+        width: 8rem;
+        margin-top: 1rem;
+    }
+
+    input {
+        width: 30rem;
     }
 
     #save-btn {
-        width: 60px;
         background-color: #58355E;
         color: #E6E8E6;
-    }
-    #cancel-btn {
-        width: 60px;
+        margin-right: 1rem;
     }
 
 </style>
 
-<div class="container"  on:keydown="{onKeyDown}">
-<h2>Add New Technology Form</h2>
+<Header title="Add New Technology" />
 
-<input id=newTechName bind:value="{name}" placeholder="Name" autofocus>
-<div>
-<button on:click="{onSave}" id="save-btn" disabled="{!name || techNames.includes(name)}">Save</button>
-<button on:click="{onCancel}" id="cancel-btn">Cancel</button>
-</div>
+<div class="container"  on:keydown="{onKeyDown}">
+    <input bind:value="{name}" placeholder="Name" autofocus>
+    <div class="btns">
+        <button on:click="{onSave}" id="save-btn" disabled="{!name || techNames.includes(name)}">Save</button>
+        <button on:click="{onCancel}" id="cancel-btn">Cancel</button>
+    </div>
 </div>

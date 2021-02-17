@@ -3,7 +3,7 @@
 </script>
 <div class="toolbar-container">
     <a href="{$url('/')}">
-        <img src="{$url('logo.png')}" alt="Logo">
+        <img src="../logo.png" alt="Logo">
     </a>
 
     <h1>
@@ -17,23 +17,29 @@
 <style>
     .toolbar-container {
         background-color: #E6E8E6;
-        color: #58355E;
-        padding: 10px 20px;
+        padding: 1rem 2rem;
         text-align: center;
+        position: relative;
+        height: 7rem;
+    }
+    h1 {
+        color: #58355E;
+        margin: 0;
     }
     img {
         position: absolute;
-        left: 100px;
-        top: 0px;
+        left: 10rem;
+        top: 50%;
+        transform: translate(0, -50%);
         cursor: pointer;
-    }
-    h1 {
-        font-size: 35px;
     }
     h4 {
         color: #3F403F;
+        font-size: 1.8rem;
+        /* font-family: 'Noto Sans JP', sans-serif; */
+        font-weight: 600;
     }
     span {
-        margin-left: 40px;
+        margin-left: 4rem;
     }
 </style>
