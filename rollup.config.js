@@ -5,7 +5,6 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import { routify } from "@sveltech/routify";
-import cleaner from 'rollup-plugin-cleaner';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -34,22 +33,15 @@ export default {
 	input: 'src/main.js',
 	output: {
 		sourcemap: true,
-		// format: 'esm',
-		format: 'iife',
+		format: 'esm',
 		name: 'app',
-		file: 'public/build/bundle.js'
-		// dir: 'public/bundle'
+		dir: 'public/bundle'
 	},
 	plugins: [
 		routify({
 			singleBuild: production,
-			// dynamicImports: true
+			dynamicImports: true
 		}),
-		cleaner({
-			targets: [
-			  'public/bundle/'
-			]
-		   }),
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production

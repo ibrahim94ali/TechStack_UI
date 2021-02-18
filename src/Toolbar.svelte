@@ -36,7 +36,6 @@
     h4 {
         color: #3F403F;
         font-size: 1.8rem;
-        /* font-family: 'Noto Sans JP', sans-serif; */
         font-weight: 600;
     }
     span {
