@@ -9,9 +9,10 @@
     <h1>
         Welcome to Tech Stack
     </h1>
-    <h4>
-        Share your helpful links <span> Start learning from best resources</span>
-    </h4>
+    <h2>
+        <span>Share your helpful links </span> 
+        <span>Start learning from best resources</span>
+    </h2>
 </div>
 
 <style>
@@ -33,12 +34,12 @@
         transform: translate(0, -50%);
         cursor: pointer;
     }
-    h4 {
+    h2 {
         color: #3F403F;
         font-size: 1.8rem;
         font-weight: 600;
     }
-    span {
+     h2 > span:last-child {
         margin-left: 4rem;
     }
 </style>

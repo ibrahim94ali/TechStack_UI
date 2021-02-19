@@ -69,17 +69,17 @@ function onTechDelete() {
         width: 100%;
     }
 
-    #btn-del {
+    #btn-del-tech {
         margin-left: 10px;
         background-color: #B43333;
         color: #E6E8E6;
     }
-    #btn-save {
+    #btn-save-tech {
         margin-right: 1rem;
         background-color: #58355E;
         color: #E6E8E6;
     }
-    #btn-cancel {
+    #btn-cancel-tech {
         background-color: #E6E8E6;
         color: #58355E;
     }
@@ -100,11 +100,11 @@ function onTechDelete() {
     </div>
     <div class="btns">
         {#if !isEditing}
-        <button id="btn-edit-cancel" on:click={onTechEdit}>Edit</button>
-        <button id="btn-del" on:click={onTechDelete}>Delete</button>
+        <button id="btn-edit-tech" on:click={onTechEdit}>Edit</button>
+        <button id="btn-del-tech" on:click={onTechDelete}>Delete</button>
         {:else}
-        <button id="btn-save" type="submit" disabled={!newName || newName === name}>Save</button>
-        <button id="btn-cancel" type="button" on:click={onCancelEditing}>Cancel</button>
+        <button id="btn-save-tech" type="submit" disabled={!newName || newName === name}>Save</button>
+        <button id="btn-cancel-tech" type="button" on:click={onCancelEditing}>Cancel</button>
         {/if}
     </div>
 

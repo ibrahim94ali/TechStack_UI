@@ -60,12 +60,12 @@
         font-size: 1.4rem;
     }
 
-    #btn-del {
+    #btn-del-post {
         margin-left: 10px;
         background-color: #B43333;
         color: #E6E8E6;
     }
-    #btn-edit {
+    #btn-edit-post {
         background-color: #E6E8E6;
         color: #58355E;
     }
@@ -74,15 +74,15 @@
     {#if !isEditing}
     <div class="post-container">
     <h2>
-        <a href={link} target="_blank">{title}</a>
+        <a href={link} target="_blank" rel="noopener">{title}</a>
     </h2> 
     <div class="meta-container">
         <p>By: <span>{owner}</span> </p>
         <p>Date: <span>{new Date(+date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit'})}</span></p>
     </div> 
     <div class="btns-container">
-        <button  id="btn-edit" on:click={() => isEditing = true}> Edit </button>
-        <button id="btn-del"  on:click={onPostDelete}> Delete </button>
+        <button id="btn-edit-post" on:click={() => isEditing = true}> Edit </button>
+        <button id="btn-del-post" on:click={onPostDelete}> Delete </button>
     </div>
 </div>
 
