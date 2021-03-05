@@ -2,7 +2,7 @@ import { GET_TECHS, EDIT_TECH, DELETE_TECH, ADD_TECH, ADD_POST, EDIT_POST, DELET
 import { technologies } from "./stores";
 
 const graphql  = async (query) => {
-    const response = await fetch(`http://localhost:4000/graphql`,{
+    const response = await fetch(`https://techstack-api.herokuapp.com/graphql`,{
         method: 'POST',
         headers: {
           'Accept': 'application/json',
