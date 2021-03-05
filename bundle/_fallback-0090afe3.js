@@ -1,2 +1,0 @@
-import{S as s,i as a,s as e,e as t,t as o,a as n,b as r,c,n as f,d as i,f as u,r as l}from"./main-12e2c5a1.js";function d(s){let a,e,u,l,d,p=s[0].leftover+"";return{c(){a=t("h4"),e=o("No page found on link "),u=t("code"),l=o("/"),d=o(p)},m(s,t){n(s,a,t),r(a,e),r(a,u),r(u,l),r(u,d)},p(s,[a]){1&a&&p!==(p=s[0].leftover+"")&&c(d,p)},i:f,o:f,d(s){s&&i(a)}}}function p(s,a,e){let t;return u(s,l,(s=>e(0,t=s))),[t]}export default class extends s{constructor(s){super(),a(this,s,p,d,e,{})}}
-//# sourceMappingURL=_fallback-0090afe3.js.map

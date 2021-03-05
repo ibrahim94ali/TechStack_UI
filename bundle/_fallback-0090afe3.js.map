@@ -1,1 +1,0 @@
-{"version":3,"file":"_fallback-0090afe3.js","sources":["../../src/pages/_fallback.svelte"],"sourcesContent":["<script>\r\n    import { route } from \"@sveltech/routify\";\r\n</script>\r\n\r\n<h4>No page found on link <code>/{$route.leftover}</code></h4>\r\n\r\n"],"names":["ctx","leftover"],"mappings":"6IAIkCA,KAAOC,8JAAPD,KAAOC"}
