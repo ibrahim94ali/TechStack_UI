@@ -1,3 +1,12 @@
+# TechStack_UI
+
+TechStack is a platform where you can find the best resources for the technology you are willing to learn or share.
+
+## Web
+
+The web application is created using Svelte.
+
+
 *Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
 ---
